@@ -297,12 +297,71 @@ public class Main {
 //        total -= 500;
 //        System.out.println(total);
 //    }
+//    {
+//        int score = 65;
+//        String result
+//                = score >= 60
+//                ? "합격"
+//                : "재시험";
+//        System.out.println(result); // 합격
+//    }
+//    {
+//        int subtotal =27_000;
+//        int deliveryFee =3_000;
+//
+//        int paymentAmount
+//                = subtotal + deliveryFee;
+//
+//        System.out.println(paymentAmount);
+//    }
+//    {
+//        int score =60;
+//
+//        if(score >= 60)
+//        {
+//            System.out.println("합격(PASS)");
+//        }
+//        if(score <= 60)
+//            System.out.println("불합격");
+//
+//        System.out.println("확인 완료");
+//    }
+//    {
+//        int amount = 29_999;
+//        int deliveryFee;
+//        if (amount >= 30_000) {
+//        } else
+//        {
+//
+//        }
+//        System.out.println(deliveryFee);
+//    }
+//    {
+//        int amount = 60_000;
+//        boolean member = true;
+//        int rate;
+//
+//        if(member && amount >= 60_000) {
+//            rate =10;
+//        } else if (member && amount >= 20_000) {
+//            rate =5;
+//        } else if (!member || amount <20_000) {
+//            rate =0;
+//        }
+//
+//    }
     {
-        int score = 65;
-        String result
-                = score >= 60
-                ? "합격"
-                : "재시험";
-        System.out.println(result); // 합격
+        int score = 75;
+        String grade;
+
+        if (score >= 90) {
+            grade = "A";
+        } else if (score >= 80) {
+            grade = "B";
+        } else if (score >= 70) {
+            grade = "C";
+        } else {
+            grade = "D";
+        }
     }
 }
