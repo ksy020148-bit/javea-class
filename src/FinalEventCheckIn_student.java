@@ -1,137 +1,98 @@
 import java.util.Scanner;
 
-
 class Student {
-    String studentId;
-    String name;
-
-    public Student(String studentId, String name) {
-        this.studentId = studentId;
+    String id, name; // 변수명 간소화
+    public Student(String id, String name) {
+        this.id = id;
         this.name = name;
     }
 }
 
 public class FinalEventCheckIn_student {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
+        Scanner sc = new Scanner(System.in);
         int capacity = 5;
         Student[] roster = new Student[capacity];
 
         while (true) {
-            System.out.println("\n=== 취업 특강 신청 관리 ===");
-            System.out.println("1. 신청");
-            System.out.println("2. 조회 및 취소");
-            System.out.println("3. 현황");
-            System.out.println("4. 종료");
-            System.out.print("메뉴 선택: ");
+            System.out.print("\n=== 취업 특강 신청 관리 ===\n1. 신청\n2. 조회 및 취소\n3. 현황\n4. 종료\n메뉴 선택: ");
+            int menu = sc.nextInt();
+            sc.nextLine();
 
-            int menu = scanner.nextInt();
-            scanner.nextLine();
+            // [핵심 축약] 매번 반복되던 '현재 인원수 카운트'를 메뉴 진입 전 1번만 수행
+            int count = 0;
+            for (Student s : roster) if (s != null) count++;
 
-            if (menu == 1) {
-                int count = 0;
-                for (int i = 0; i < capacity; i++) {
-                    if (roster[i] != null) {
-                        count++;
-                    }
-                }
-
-                if (count >= capacity) {
-                    System.out.println("안내: 정원(5명)이 모두 차서 신청이 마감되었습니다.");
-                    continue;
-                }
-
-                System.out.print("학번을 입력하세요: ");
-                String id = scanner.nextLine();
-
-                boolean isDuplicate = false;
-                for (int i = 0; i < capacity; i++) {
-                    if (roster[i] != null && roster[i].studentId.equals(id)) {
-                        isDuplicate = true;
+            switch (menu) {
+                case 1: // [신청]
+                    if (count >= capacity) {
+                        System.out.println("안내: 정원(5명)이 모두 차서 신청이 마감되었습니다.");
                         break;
                     }
-                }
+                    System.out.print("학번을 입력하세요: ");
+                    String id = sc.nextLine();
 
-                if (isDuplicate) {
-                    System.out.println("안내: 이미 신청된 학번입니다. (중복 신청 거절)");
-                    continue;
-                }
+                    boolean isDup = false;
+                    for (Student s : roster) if (s != null && s.id.equals(id)) isDup = true;
 
-                System.out.print("이름을 입력하세요: ");
-                String name = scanner.nextLine();
-
-
-                for (int i = 0; i < capacity; i++) {
-                    if (roster[i] == null) {
-                        roster[i] = new Student(id, name);
-                        System.out.println("안내: 신청이 완료되었습니다.");
+                    if (isDup) {
+                        System.out.println("안내: 이미 신청된 학번입니다. (중복 신청 거절)");
                         break;
                     }
-                }
 
-            } else if (menu == 2) {
-                // [조회 및 취소] 기능
-                System.out.println("\n--- 현재 신청 명단 ---");
-                for (int i = 0; i < capacity; i++) {
-                    if (roster[i] != null) {
-                        System.out.println((i + 1) + "번: 학번 " + roster[i].studentId + " / 이름 " + roster[i].name);
-                    } else {
-                        System.out.println((i + 1) + "번: null");
+                    System.out.print("이름을 입력하세요: ");
+                    String name = sc.nextLine();
+                    for (int i = 0; i < capacity; i++) {
+                        if (roster[i] == null) {
+                            roster[i] = new Student(id, name);
+                            System.out.println("안내: 신청이 완료되었습니다.");
+                            break;
+                        }
                     }
-                }
+                    break;
 
-                System.out.print("\n취소할 학생의 학번을 입력하세요 (취소 안함: 엔터): ");
-                String cancelId = scanner.nextLine();
+                case 2: // [조회 및 취소]
+                    System.out.println("\n--- 현재 신청 명단 ---");
+                    for (int i = 0; i < capacity; i++) {
+                        // 삼항 연산자를 활용한 출력문 압축
+                        System.out.println((i + 1) + "번: " + (roster[i] != null ? "학번 " + roster[i].id + " / 이름 " + roster[i].name : "null"));
+                    }
 
-                if (!cancelId.isEmpty()) {
+                    System.out.print("\n취소할 학생의 학번을 입력하세요 (취소 안함: 엔터): ");
+                    String cancelId = sc.nextLine();
+                    if (cancelId.isEmpty()) break;
+
                     boolean isCanceled = false;
                     for (int i = 0; i < capacity; i++) {
-                        if (roster[i] != null && roster[i].studentId.equals(cancelId)) {
+                        if (roster[i] != null && roster[i].id.equals(cancelId)) {
                             roster[i] = null;
                             System.out.println("안내: 성공적으로 취소되었습니다.");
                             isCanceled = true;
                             break;
                         }
                     }
-                    if (!isCanceled) {
-                        System.out.println("안내: 일치하는 학번이 없습니다.");
+                    if (!isCanceled) System.out.println("안내: 일치하는 학번이 없습니다.");
+                    break;
+
+                case 3: // [현황]
+                    System.out.println("\n--- 특강 신청 현황 ---");
+                    System.out.println("현재 신청인: " + count + "명\n남은 자리: " + (capacity - count) + "명");
+                    System.out.print("명단 배열 상태: [");
+                    for (int i = 0; i < capacity; i++) {
+                        System.out.print(roster[i] != null ? roster[i].name : "null");
+                        if (i < capacity - 1) System.out.print(", ");
                     }
-                }
+                    System.out.println("]");
+                    break;
 
-            } else if (menu == 3) {
-                // [현황] 기능
-                int currentCount = 0;
-                for (int i = 0; i < capacity; i++) {
-                    if (roster[i] != null) {
-                        currentCount++;
-                    }
-                }
+                case 4: // [종료]
+                    System.out.println("프로그램을 종료합니다.");
+                    sc.close();
+                    return; // break label 대신 return으로 프로그램 즉시 종료
 
-                System.out.println("\n--- 특강 신청 현황 ---");
-                System.out.println("현재 신청인: " + currentCount + "명");
-                System.out.println("남은 자리: " + (capacity - currentCount) + "명");
-
-                System.out.print("명단 배열 상태: [");
-                for (int i = 0; i < capacity; i++) {
-                    if (roster[i] != null) {
-                        System.out.print(roster[i].name);
-                    } else {
-                        System.out.print("null");
-                    }
-                    if (i < capacity - 1) System.out.print(", ");
-                }
-                System.out.println("]");
-
-            } else if (menu == 4) {
-                System.out.println("프로그램을 종료합니다.");
-                break;
-            } else {
-                System.out.println("잘못된 입력입니다. 1~4 사이의 숫자를 입력해주세요.");
+                default:
+                    System.out.println("잘못된 입력입니다. 1~4 사이의 숫자를 입력해주세요.");
             }
         }
-
-
-        scanner.close();
     }
 }
