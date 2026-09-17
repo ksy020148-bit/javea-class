@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 class Student {
-    String id, name; // 변수명 간소화
+    String id, name;
     public Student(String id, String name) {
         this.id = id;
         this.name = name;
@@ -19,12 +19,11 @@ public class FinalEventCheckIn_student {
             int menu = sc.nextInt();
             sc.nextLine();
 
-            // [핵심 축약] 매번 반복되던 '현재 인원수 카운트'를 메뉴 진입 전 1번만 수행
             int count = 0;
             for (Student s : roster) if (s != null) count++;
 
             switch (menu) {
-                case 1: // [신청]
+                case 1:
                     if (count >= capacity) {
                         System.out.println("안내: 정원(5명)이 모두 차서 신청이 마감되었습니다.");
                         break;
@@ -51,10 +50,9 @@ public class FinalEventCheckIn_student {
                     }
                     break;
 
-                case 2: // [조회 및 취소]
+                case 2:
                     System.out.println("\n--- 현재 신청 명단 ---");
                     for (int i = 0; i < capacity; i++) {
-                        // 삼항 연산자를 활용한 출력문 압축
                         System.out.println((i + 1) + "번: " + (roster[i] != null ? "학번 " + roster[i].id + " / 이름 " + roster[i].name : "null"));
                     }
 
@@ -85,10 +83,10 @@ public class FinalEventCheckIn_student {
                     System.out.println("]");
                     break;
 
-                case 4: // [종료]
+                case 4:
                     System.out.println("프로그램을 종료합니다.");
                     sc.close();
-                    return; // break label 대신 return으로 프로그램 즉시 종료
+                    return;
 
                 default:
                     System.out.println("잘못된 입력입니다. 1~4 사이의 숫자를 입력해주세요.");
