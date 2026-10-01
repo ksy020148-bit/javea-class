@@ -2,6 +2,9 @@
 // 에디터 여백에 있는 <icon src="AllIcons.Actions.Execute"/> 아이콘을 클릭하세요.
 public class Main {
     public static void main(String[] args)
+    {
+
+    }
 //    {
 //        int studyMoths = 6;
 //        int projectCount = 2;
@@ -350,18 +353,18 @@ public class Main {
 //        }
 //
 //    }
-    {
-        int score = 75;
-        String grade;
-
-        if (score >= 90) {
-            grade = "A";
-        } else if (score >= 80) {
-            grade = "B";
-        } else if (score >= 70) {
-            grade = "C";
-        } else {
-            grade = "D";
-        }
-    }
+//    {
+//        int score = 75;
+//        String grade;
+//
+//        if (score >= 90) {
+//            grade = "A";
+//        } else if (score >= 80) {
+//            grade = "B";
+//        } else if (score >= 70) {
+//            grade = "C";
+//        } else {
+//            grade = "D";
+//        }
+//    }
 }
